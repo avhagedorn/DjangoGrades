@@ -1,0 +1,30 @@
+{% extends "stats/base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+	<div class="content-section">
+		{% if form.fields|length != 0 %}
+		<form method="POST" enctype="multipart/form-data">
+			{% csrf_token %}
+			<fieldset class="form-group">
+				<legend class="border-bottom mb-4">Assignment Weight</legend>
+				{{ form|crispy }}
+			</fieldset>
+			<div class="form-group">
+				<button class="btn btn-outline-info" type="submit">Save</button>
+				<a class="btn btn-outline-secondary float-right" href="{% url 'course-categories' id %}">Categories</a>
+			</div>
+			{% if is_curved %}
+			<small class="text-danger">Updating course weights will reset the current curve!</small>
+			{% endif %}
+		</form>
+		{% else %}
+		<legend>Assignment Weight</legend>
+		<div class="line"></div>
+		<div class="textbox-small">
+			<p>It's looking empty in here!</p>      
+			<a href="{% url 'course-upload' id %}"><small>Upload course data to get started.</small></a>      
+		</div>    
+		{% endif %}
+	</div>
+{% endblock content %}

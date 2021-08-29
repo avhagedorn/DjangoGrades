@@ -1,0 +1,171 @@
+{% extends "stats/base.html" %}
+{% block content %}
+    <h1>Curve Equations</h1>
+    <div class="line"></div>
+
+    <div class="curve-block">
+        <div class="textbox">
+            <h4>Flat Curve</h4>
+            <p>The flat curve works by taking the highest score and subtract it from 100. The difference is then added to every student's score.</p>
+            <div class="center">
+                <img src="../static/stats/flat_curve.PNG" alt="" class="curve-content">            
+                <div class="curve-content">
+                    <table class="table table-text">
+                        <thead>
+                            <th scope="Col">Name</th>
+                            <th scope="Col">Uncurved</th>
+                            <th scope="Col">Curved</th>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="student-name">Student A</td>
+                                <td class="grade-item">57</td>
+                                <td class="grade-item">61</td>
+                            </tr>
+                            <tr>
+                                <td class="student-name">Student B</td>
+                                <td class="grade-item">69</td>
+                                <td class="grade-item">73</td>
+                            </tr>
+                            <tr>
+                                <td class="student-name">Student C</td>
+                                <td class="grade-item">82</td>
+                                <td class="grade-item">86</td>
+                            </tr>
+                            <tr>
+                                <td class="student-name">Student D</td>
+                                <td class="grade-item">96</td>
+                                <td class="grade-item">100</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>    
+    </div>
+
+    <div class="curve-block">
+        <div class="textbox">
+            <h4>Square Root Curve</h4>
+            <p>The square root curve works by multiplying 10 to the square root of every student's score.</p>
+            <div class="center">
+                <img src="../static/stats/square_root_curve.PNG" alt="" class="curve-content">            
+                <div class="curve-content">
+                    <table class="table table-text">
+                        <thead>
+                            <th scope="Col">Name</th>
+                            <th scope="Col">Uncurved</th>
+                            <th scope="Col">Curved</th>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="student-name">Student A</td>
+                                <td class="grade-item">57</td>
+                                <td class="grade-item">75</td>
+                            </tr>
+                            <tr>
+                                <td class="student-name">Student B</td>
+                                <td class="grade-item">69</td>
+                                <td class="grade-item">83</td>
+                            </tr>
+                            <tr>
+                                <td class="student-name">Student C</td>
+                                <td class="grade-item">82</td>
+                                <td class="grade-item">90</td>
+                            </tr>
+                            <tr>
+                                <td class="student-name">Student D</td>
+                                <td class="grade-item">96</td>
+                                <td class="grade-item">97</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="curve-block">
+        <div class="textbox">
+            <h4>Linear Curve</h4>
+            <p>The linear curve is given by the following equation:</p>
+            <div class="center">
+                <img src="../static/stats/linear_curve.PNG" alt="" class="curve-content">            
+                <div class="curve-content">
+                    <table class="table table-text">
+                        <thead>
+                            <th scope="Col">Name</th>
+                            <th scope="Col">Uncurved</th>
+                            <th scope="Col">Curved</th>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="student-name">Student A</td>
+                                <td class="grade-item">57</td>
+                                <td class="grade-item">60</td>
+                            </tr>
+                            <tr>
+                                <td class="student-name">Student B</td>
+                                <td class="grade-item">69</td>
+                                <td class="grade-item">71</td>
+                            </tr>
+                            <tr>
+                                <td class="student-name">Student C</td>
+                                <td class="grade-item">82</td>
+                                <td class="grade-item">85</td>
+                            </tr>
+                            <tr>
+                                <td class="student-name">Student D</td>
+                                <td class="grade-item">96</td>
+                                <td class="grade-item">100</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="curve-block">
+        <div class="textbox">
+            <h4>Normal Curve</h4>
+            <p>The normal curve is given by the following equation:</p>
+            <div class="center">
+                <img src="../static/stats/normal_curve.PNG" alt="" class="curve-content">
+                <div class="curve-content">
+                    <table class="table table-text">
+                        <thead>
+                            <th scope="Col">Name</th>
+                            <th scope="Col">Uncurved</th>
+                            <th scope="Col">Curved</th>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="student-name">Student A</td>
+                                <td class="grade-item">57</td>
+                                <td class="grade-item">71</td>
+                            </tr>
+                            <tr>
+                                <td class="student-name">Student B</td>
+                                <td class="grade-item">69</td>
+                                <td class="grade-item">80</td>
+                            </tr>
+                            <tr>
+                                <td class="student-name">Student C</td>
+                                <td class="grade-item">82</td>
+                                <td class="grade-item">89</td>
+                            </tr>
+                            <tr>
+                                <td class="student-name">Student D</td>
+                                <td class="grade-item">96</td>
+                                <td class="grade-item">98</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock content%}
+

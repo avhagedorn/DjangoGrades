@@ -1,0 +1,240 @@
+{% extends "stats/base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block content %}
+	<title>{{ course.title }}</title>
+	<h1>{{ course.title }}</h1>
+	<div class="line"></div>
+	{% if assignment_titles|length == 0%}
+		<p>It's looking empty in here!</p>
+		<a class="btn btn-outline-info" type="submit" href="{% url 'course-upload' course.id %}">Upload Data</a>
+		<a class="btn btn-outline-secondary" type="submit" href="{% url 'course-update' course.id %}">Settings</a>
+	{% else %}
+		<div class="charts">
+			<canvas id="averageGrades" height="250" width="1100"></canvas>
+		</div>	
+		{% if hasGrades %}
+		<div class="chart-group">
+			<canvas id="gradeDistribution" height="200" width="900" class="chart-large-item"></canvas>
+			<canvas id="letterGradeDistribution" width="200" height="200" class="chart-small-item"></canvas>
+		</div>
+		{% endif %}
+	{% endif %}
+
+	<!--Charts-->
+	<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+	<script type="text/javascript" src="{% static 'stats/detailed-charts.js'%}"></script>	
+	{% if assignment_titles|length != 0 %}
+	<script>
+		var averageGrades = new Chart(document.getElementById("averageGrades"), {
+		type: 'line',
+			data: {
+				labels: JSON.parse("{{ jsonTitles|escapejs }}"),
+				datasets: [
+				{ label: 'Current Average',
+				data: JSON.parse("{{ jsonAvg|escapejs }}"),
+				backgroundColor :'rgba(117, 247, 74, 1)'}
+				],
+			},
+			options: avgOptions,
+			title: avgTitle
+		});
+	</script>
+	{% endif %}
+	{% if hasGrades %}
+	<script>
+		var pie_colors = ['rgba(117, 247, 74, 1)', 'rgba(184, 247, 74, 1)','rgba(247, 238, 74, 1)', 'rgba(247, 202, 74, 1)', 'rgba(247, 173, 74, 1)', 'rgba(247, 105, 74, 1)', 'rgba(247, 105, 74, 1)', 'rgba(247, 74, 74, 1)', 'rgba(234, 52, 66, 1)', 'rgba(208, 42, 78, 1)', 'rgba(176, 42, 71, 1)', 'rgba(103, 0, 23, 1)']
+		// Excludes unnessecary data
+		let cleanOutPlugin = {
+			beforeInit: function(chart) {
+			let dt = chart.config.data.datasets[0].data;
+			let lb = chart.config.data.labels;
+			let i = 0;
+			while (dt[i] == 0){i++;}
+			dt.splice(0, i);
+			lb.splice(0, i);
+			}
+		}
+
+		let distLabels = new Array (101);
+		for (var i = 0; i < 101; i++) {
+			distLabels[i] = (i%5 == 0) ? i.toString() : '';
+		}
+		
+		var letterGradeDistribution = new Chart(document.getElementById("letterGradeDistribution"), {
+			type: 'pie',
+			data: {
+				labels: JSON.parse("{{ letterGradeLabels|escapejs }}"),
+				datasets: [
+				{ label: 'Grade Distribution (Letter)',
+				data: JSON.parse("{{ letterGradeDist|escapejs }}"),
+				backgroundColor: pie_colors
+				}
+				]
+			},
+			options: letterDistOptions,
+		})
+
+		Chart.pluginService.register(cleanOutPlugin)
+		var gradeDistribution = new Chart(document.getElementById("gradeDistribution"), {
+			type: 'line',
+			data: {
+				labels: distLabels,
+				datasets: [
+				{ label: 'Grade Distribution',
+				data: JSON.parse("{{ gradeDist|escapejs }}"),
+				backgroundColor :'rgba(74, 195, 247, 1)',
+				pointRadius: 0,},
+				],
+			},
+			options: distOptions,
+		});
+	</script>
+	{% endif %}
+	
+	<!--Curve modal-->
+	<div class="modal fade" id="curveModal" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content modal-dark modal-inner">
+				<form method="POST" enctype="multipart/form-data">
+					{% csrf_token %}
+					<h5 class="border-bottom mb-4">Calculate Ideal Curve</h5>
+					<div class="form-row">
+						<div class="col">{{ curve_form.target_a|as_crispy_field }}</div>
+						<div class="col">{{ curve_form.target_b|as_crispy_field }}</div>
+					</div>
+					<div class="form-row">
+						<div class="col">{{ curve_form.target_c|as_crispy_field }}</div>
+						<div class="col">{{ curve_form.target_d|as_crispy_field }}</div>
+						<div class="col">{{ curve_form.target_f|as_crispy_field }}</div>
+					</div>
+					<button class="btn btn-outline-info" type="submit" name="item_type" value="curve">Calculate</button>	
+					<button type="button" class="btn btn-outline-danger" data-dismiss="modal">Cancel</button>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<!--Undo modal-->
+	<div class="modal fade" id="undoModal" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content modal-dark modal-inner">
+				<form method="POST" enctype="multipart/form-data">
+					{% csrf_token %}
+					<h5 class="border-bottom mb-4">Undo Curve?</h5>
+					<button class="btn btn-outline-info" type="submit" name="item_type" value="undo">Undo</button>	
+					<button type="button" class="btn btn-outline-danger" data-dismiss="modal">Cancel</button>
+					<small class="text-muted">This will restore all grades to the original state.</small>
+				</form>
+			</div>
+		</div>
+	</div>
+	<!--Add modal-->
+	<div class="modal fade" id="addModal" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content modal-dark modal-inner">
+				<form method="POST" enctype="multipart/form-data">
+					{% csrf_token %}
+					<h5 class="border-bottom mb-4">Add Assignment</h5>
+					<div class="form-row">
+						<div class="col">{{ add_assignment_form.title|as_crispy_field }}</div>
+						<div class="col">{{ add_assignment_form.assignment_type|as_crispy_field }}</div>
+					</div>
+					{{ add_assignment_form.projected_avg|as_crispy_field}}
+					<small display="block" class="text-muted">If no expected score is provided, one will be generated from the weighted average of past assignments.</small>
+					<div>
+						<button class="btn btn-outline-info" type="submit" name="item_type" value="add">Add</button>
+						<button type="button" class="btn btn-outline-danger" data-dismiss="modal">Cancel</button>
+					</div>
+					
+				</form>
+			</div>
+		</div>
+	</div>
+	<!--Drop modal-->
+	<div class="modal fade" id="dropModal" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content modal-dark modal-inner">
+				<form method="POST" enctype="multipart/form-data">
+					{% csrf_token %}
+						<h5 class="border-bottom mb-4">Drop Assignments</h5>
+						{{ drop_assignment_form|crispy }}
+						<button class="btn btn-outline-info" type="submit" name="item_type" value="drop">Drop</button>
+						<button type="button" class="btn btn-outline-danger" data-dismiss="modal">Cancel</button>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	{% if course.detailed == False %}
+	<div class="page-nav">
+		<a class="btn btn-outline-secondary btn-sm nav-item" type="submit" href="{% url 'course-update' course.id %}">Settings</a>
+		{% if course.is_curved == False %}
+		<button class="btn btn-outline-secondary btn-sm nav-item" data-toggle="modal" data-target="#curveModal">Curve</button>
+		{% else %}
+		<button class="btn btn-outline-secondary btn-sm nav-item" data-toggle="modal" data-target="#undoModal">Undo Curve</button>
+		{% endif %}
+		<button class="btn btn-outline-secondary btn-sm nav-item" data-toggle="modal" data-target="#dropModal" disabled>Drop</button>
+		<button class="btn btn-outline-secondary btn-sm nav-item" data-toggle="modal" data-target="#addModal">Add</button>
+	</div>
+	{% endif %}
+{% endblock content%}
+
+{% block second %}
+	{% if assignment_titles|length != 0 %}
+		{% if course.detailed %}
+		<div class="page-nav">
+			{% if students.has_other_pages %}
+				{% if students.has_previous %}
+					<a class="btn btn-outline-light btn-sm" href="?page=1">First</a>
+				{% endif %}
+				{% for n in students.paginator.page_range %}
+					{% if students.number == n %}
+						<a class="btn btn-outline-light active btn-sm" href="?page={{n}}">{{n}}</a>
+					{% elif n > students.number|add:'-2' and n < students.number|add:'2' %}
+						<a class="btn btn-outline-light btn-sm" href="?page={{n}}">{{n}}</a>
+					{% endif %}
+				{% endfor %}
+				{% if students.has_next %}
+					<a class="btn btn-outline-light btn-sm" href="?page={{students.paginator.num_pages}}">Last</a>
+				{% endif%}
+			{% endif %}
+			<a class="btn btn-outline-secondary btn-sm nav-item" type="submit" href="{% url 'course-update' course.id %}">Settings</a>
+			{% if course.is_curved == False %}
+			<button class="btn btn-outline-secondary btn-sm nav-item" data-toggle="modal" data-target="#curveModal">Curve</button>
+			{% else %}
+			<button class="btn btn-outline-secondary btn-sm nav-item" data-toggle="modal" data-target="#undoModal">Undo Curve</button>
+			{% endif %}
+			<button class="btn btn-outline-secondary btn-sm nav-item" data-toggle="modal" data-target="#dropModal" disabled>Drop</button>
+			<button class="btn btn-outline-secondary btn-sm nav-item" data-toggle="modal" data-target="#addModal">Add</button>
+		</div>
+		<div class="table-responsive table-wrapper-scroll-y" >
+			<table class="table table-text">
+				<thead>
+					<th scope="col">Student</th>
+					{% for a in assignment_titles %}
+					<th scope="col">{{ a }}</th>
+					{% endfor %}
+				</thead>
+				<tbody>
+					<tr>
+						<td>Average</td>
+						{% for a in assignment_avgs %}
+						<td>{{ a }}%</td>
+						{% endfor %}
+					</tr>
+						{% for student in students %}
+						<tr>
+							<td><a href="{% url 'student-detail' student.id %}" class="text-green">{{ student.name }}</a></td>
+							{% for grade in student.grades_raw %}
+							<td class="grade-item">{{ grade }}</td>
+							{% endfor %}					
+						</tr>
+						{% endfor %}
+				</tbody>
+			</table>
+		</div>
+		{% endif %}
+	{% endif %}
+{% endblock second %}

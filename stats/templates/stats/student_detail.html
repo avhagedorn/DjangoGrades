@@ -1,0 +1,72 @@
+{% extends "stats/base.html" %}
+
+{% load static %}
+
+{% block content %}
+	<title>{{ student.name }}</title>
+	<h1 style="display: inline;">{{ student.name }}</h1>	
+	<h1 class="float-right text-muted">{{ student.student_id }}</h1>
+	<div class="line"></div>
+
+	<p class="grade-display">Current grade: {{ student.letter_grade }}</p>
+	<br>
+	<p class="grade-display">{{ numerical_grade }}%</p>
+
+	{% if relative_grade >= 0 %}
+	<p class="grade-display text-green">(+{{ relative_grade }}%)</p>
+	{% else %}
+	<p class="grade-display text-red">({{ relative_grade }}%)</p>
+	{% endif %}
+
+	<div class="charts" style="text-align:center">
+		<canvas id="averageGrades"  width="800" height="250" style="display: block; box-sizing: border-box;"></canvas>
+	</div>	
+
+	<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+	<script type="text/javascript" src="{% static 'stats/detailed-charts.js'%}"></script>
+	<script>
+		var averageGrades = new Chart(document.getElementById("averageGrades"), {
+		type: 'line',
+			data: {
+				labels: JSON.parse("{{ titlesJSON|escapejs }}"),
+				datasets: [
+				{ label: 'Assignment Grades',
+				data: JSON.parse("{{ rawData|escapejs }}"),
+				backgroundColor :'rgba(59, 229, 0, 0.8)'},
+
+				{ label: 'Assignment Grades',
+				data: JSON.parse("{{ avgData|escapejs }}"),
+				backgroundColor :'rgba(255, 255, 255, 1)'}
+				],
+
+			},
+			options: studentOptions,
+			title: avgTitle
+		});
+	</script>
+{% endblock content%}
+
+{% block second %}
+<div class="table-responsive table-wrapper-scroll-y" >
+	<table class="table" style="font-size:x-small;">
+		<thead>
+			<th scope="col"></th>
+			{% for title in titles %}
+				<th scope="col">{{ a }}{{title}}</th>
+			{% endfor %}				
+		</thead>
+		<tbody>
+			<tr>
+				<td>Average</td>
+				{% for score in avgScores %}
+				<td>{{ score }}</td>
+				{% endfor %}
+			</tr>
+			<tr>
+				<td>Student</td>
+				{% for grade in rawData %}
+				<td>{{ grade }}</td>
+				{% endfor %}
+			</tr>
+		</tbody>
+{% endblock second %}

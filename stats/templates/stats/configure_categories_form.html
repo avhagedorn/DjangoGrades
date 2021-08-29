@@ -1,0 +1,68 @@
+{% extends "stats/base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <title>Categories</title>
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>-->
+    <div class="content-section">
+        {% if form.fields|length != 0%}
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <fieldset class="form-group">
+                <legend>Configure Categories</legend>
+                    <div class="table-responsive table-wrapper-scroll-y" >
+                        <table class="table table-sm">
+                            <thead>
+                                <th scope="Col">Title</th>
+                                <th scope="Col">Category</th>
+                            </thead>
+                            <tbody style="font-size:small;">
+                                {% for field in form %}
+                                <tr>
+                                    <td>{{ field.name }}</td>
+                                    <td>{{ field }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>     
+            </fieldset>
+            <div class="form-group">
+                <button class="btn btn-outline-info" type="submit">Save</button>
+                <button type="button" class="btn btn-outline-secondary float-right" data-toggle="modal" data-target="#categoryModal">Add Category</button>
+            </div>
+            {% if is_curved %}
+            <small class="text-danger">Changing assignment categories will reset the current curve!</small>
+            {% endif %}
+        </form>
+
+        <!-- Modal -->
+        <div class="modal fade" id="categoryModal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content modal-dark modal-inner">
+                    <form method="POST" enctype="multipart/form-data">                        
+                        {% csrf_token %}
+                        <fieldset class="form-group">
+                            <legend>Create Category</legend>
+                                <div class="form-outline">
+                                    <input type="text" name="categoryTitle" class="form-control">
+                                </div>
+                        </fieldset>
+                        <button class="btn btn-outline-info" type="submit">Create</button>
+                        <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Cancel</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        {% else %}
+            <legend class="border-bottom">Configure Categories</legend>
+            <div class="textbox-small">
+                <p>It's looking empty in here!</p>      
+                <a href="{% url 'course-upload' id %}">
+                    <small>Upload course data to get started.</small>
+                </a>      
+            </div>            
+        {% endif %}
+    </div>
+{% endblock %}

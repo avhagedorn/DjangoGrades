@@ -1,0 +1,83 @@
+{% extends "stats/base.html" %}
+{% load crispy_forms_tags %}
+
+
+{% block content %}
+<title>Welcome!</title>
+
+	<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+	<h1>Welcome!</h1>
+	<div class="line"></div>
+	<div class="charts">
+		<div class="chart-container demo-chart">
+		    <canvas id="myChart" width="500" height="250"></canvas>
+		</div>
+		<div class="chart-container demo-chart">
+		    <canvas id="myChart2" width="500" height="250"></canvas>
+		</div>
+	</div>
+
+	<div class="textBox">
+		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+	</div>
+
+	<script type="text/javascript">
+	   Chart.defaults.global.animation.duration = 1500
+	   Chart.defaults.global.title.fontColor = '#f2f2f2'
+	   var dummyHistorical = [0, 9, 39, 52, 67, 24, 8]
+	   var dummyCurrent = [1, 6, 34, 60, 63, 28, 8]
+	   var gradelines = [40, 50, 60, 70, 80, 90, 100]
+	   var i = 0
+  
+	   var ctx = document.getElementById("myChart");
+	   var myChart = new Chart(ctx, {
+	      type: 'line',
+	         data: {
+	            labels: ["Midterm 1", "Midterm 2" , "Project" , "Midterm 3", "Final Exam"],
+	            datasets: [
+	               { label: 'Current Average',
+	               data: [67,71,86,72,64],
+	               backgroundColor :'rgba(64, 255, 0, 0.8)'},
+	            { label: 'Historical Avgerage',
+	               data: [73,66,88,67,67],
+	               backgroundColor :'rgba(255, 255, 255, 0.8)'}
+	            ],
+	   		},
+	   options: {
+			beginAtZero:false,
+			responsible: false,
+			title: {
+                display: true,
+                text: 'Course Assignments',
+            }
+	   }
+	});
+
+	var ctx = document.getElementById("myChart2");
+	   var myChart = new Chart(ctx, {
+	      type: 'line',
+	         data: {
+	            labels: gradelines,
+	            datasets: [
+	               { label: 'Current Grade',
+	               data: dummyCurrent,
+	               backgroundColor :['rgba(64, 255, 0, 0.8)'],
+	               pointRadius: 0,
+	           },  { label: 'Historical Grades',
+	               data: dummyHistorical,
+	               backgroundColor :['rgba(255, 255, 255, 0.8)'],
+	               pointRadius: 0,
+	           },
+	            ], 
+	   		},
+	   options: {
+			beginAtZero: false,
+			responsible: false,
+			title: {
+                display: true,
+                text: 'Grade Distribution',
+            }
+	   }
+	});
+	</script>
+{% endblock content%}

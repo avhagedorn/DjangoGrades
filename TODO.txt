@@ -1,0 +1,11 @@
+- Add forgot password option
+
+- Add drop assignment funcitonality
+
+When changing categories, do not recalculate the ENTIRE grades. Instead, find the new course.weights (find all additions and subtractions in course titles/num_assignments) first. Then, use the old weights in conjunction with the new weights, looping through the changed items as follows:
+
+for student in students:
+    for changed in changed_items:
+        student.grade -= assignment_grade * old.weight / old.num
+        student.grade += assignment_grade * new.weight / new.num
+

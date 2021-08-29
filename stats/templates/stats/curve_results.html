@@ -1,0 +1,170 @@
+{% extends "stats/base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block content %}
+	<title>{{ title }} Curve Results</title>
+	<h1>Curve Results</h1>
+	<div class="line"></div>
+
+    {% for result in results %}
+    <div class="curve-block">
+        <div class="textbox">
+            <h4>{{ result.title }}</h4>
+            <div class="chart-group-compact">
+                <canvas id="{{ result.id }}_pie" height="150" width="150" class="chart-small-pie"></canvas>
+                <canvas id="{{ result.id }}_bar" height="150" width="650" class="chart-medium-bar"></canvas>
+            </div>
+            <form method="POST">
+                {% csrf_token %}
+                <button class="btn btn-outline-info btn-sm" href="{% url 'course-detail' id %}" type="submit" name="curve_name" value="{{ result.id }}">Apply Curve</button>
+                <a class="btn btn-outline-secondary btn-sm float-right" href="{% url 'stats-curves' %}">Curve Equations</a>
+            </form>
+        </div>
+    </div>
+    {% endfor %}
+
+<!--Charts-->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+<script type="text/javascript" src="{% static 'stats/detailed-charts.js'%}"></script>	
+<script>
+    var data = JSON.parse("{{ resultsJSON|escapejs }}")
+    var indexes = JSON.parse("{{ indexesJSON|escapejs }}")
+    var grade_labels = ['A', 'A-', 'B+', 'B', 'B-', 'C+', 'C', 'C-', 'D+', 'D', 'D-', 'F']
+    var pie_colors = ['rgba(117, 247, 74, 1)', 'rgba(184, 247, 74, 1)','rgba(247, 238, 74, 1)', 'rgba(247, 202, 74, 1)', 'rgba(247, 173, 74, 1)', 'rgba(247, 105, 74, 1)', 'rgba(247, 105, 74, 1)', 'rgba(247, 74, 74, 1)', 'rgba(234, 52, 66, 1)', 'rgba(208, 42, 78, 1)', 'rgba(176, 42, 71, 1)', 'rgba(103, 0, 23, 1)']
+    var bar_color = 'rgba(255, 255, 255, 1)'
+
+    var curve_none_pie = new Chart(document.getElementById("curve_none_pie"), {
+        type: 'pie',
+        data: {
+            labels: grade_labels,
+            datasets: [
+            { data: data[indexes['curve_none']]['distribution'],
+            backgroundColor: pie_colors
+            }
+            ]
+        },
+        options: letterDistOptions,
+    })
+
+    var curve_none_bar = new Chart(document.getElementById("curve_none_bar"), {
+        type: 'bar',
+        data: {
+            labels: grade_labels,
+            datasets: [
+            { data: data[indexes['curve_none']]['distribution'],
+            backgroundColor: bar_color
+            }
+            ]
+        },
+        options: letterDistOptions,
+    })
+    
+
+    var curve_flat_pie = new Chart(document.getElementById("curve_flat_pie"), {
+        type: 'pie',
+        data: {
+            labels: grade_labels,
+            datasets: [
+            { data: data[indexes['curve_flat']]['distribution'],
+            backgroundColor: pie_colors
+            }
+            ]
+        },
+        options: letterDistOptions,
+    })
+
+    var curve_flat_bar = new Chart(document.getElementById("curve_flat_bar"), {
+        type: 'bar',
+        data: {
+            labels: grade_labels,
+            datasets: [
+            { data: data[indexes['curve_flat']]['distribution'],
+            backgroundColor: bar_color
+            }
+            ]
+        },
+        options: letterDistOptions,
+    })
+
+    var curve_sqrt_pie = new Chart(document.getElementById("curve_sqrt_pie"), {
+        type: 'pie',
+        data: {
+            labels: grade_labels,
+            datasets: [
+            { data: data[indexes['curve_sqrt']]['distribution'],
+            backgroundColor: pie_colors
+            }
+            ]
+        },
+        options: letterDistOptions,
+    })
+
+    var curve_sqrt_bar = new Chart(document.getElementById("curve_sqrt_bar"), {
+        type: 'bar',
+        data: {
+            labels: grade_labels,
+            datasets: [
+            { data: data[indexes['curve_sqrt']]['distribution'],
+            backgroundColor: bar_color
+            }
+            ]
+        },
+        options: letterDistOptions,
+    })
+
+    var curve_linear_pie = new Chart(document.getElementById("curve_linear_pie"), {
+        type: 'pie',
+        data: {
+            labels: grade_labels,
+            datasets: [
+            { data: data[indexes['curve_linear']]['distribution'],
+            backgroundColor: pie_colors
+            }
+            ]
+        },
+        options: letterDistOptions,
+    })
+
+    var curve_linear_bar = new Chart(document.getElementById("curve_linear_bar"), {
+        type: 'bar',
+        data: {
+            labels: grade_labels,
+            datasets: [
+            { data: data[indexes['curve_linear']]['distribution'],
+            backgroundColor: bar_color
+            }
+            ]
+        },
+        options: letterDistOptions,
+    })
+
+    var curve_normal_pie = new Chart(document.getElementById("curve_normal_pie"), {
+        type: 'pie',
+        data: {
+            labels: grade_labels,
+            datasets: [
+            { data: data[indexes['curve_normal']]['distribution'],
+            backgroundColor: pie_colors
+            }
+            ]
+        },
+        options: letterDistOptions,
+    })
+
+    var curve_normal_bar = new Chart(document.getElementById("curve_normal_bar"), {
+        type: 'bar',
+        data: {
+            labels: grade_labels,
+            datasets: [
+            { data: data[indexes['curve_normal']]['distribution'],
+            backgroundColor: bar_color
+            }
+            ]
+        },
+        options: letterDistOptions,
+    })
+    
+</script>
+
+{% endblock content%}

@@ -1,0 +1,13 @@
+{% extends "stats/base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+	<h1>Hello, {{ user.username }}!</h1>
+	<div class="line"></div>
+	<div style="margin-top: 5px;">
+		<a type="button" class="btn btn-outline-light" href="{% url 'course-create' %}">Add A Course</a>	
+	</div>
+
+	<!--<aside></aside>-->
+	
+{% endblock content%}

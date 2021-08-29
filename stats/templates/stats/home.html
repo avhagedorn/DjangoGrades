@@ -1,0 +1,23 @@
+{% extends "stats/base.html" %}
+{% block content %}
+	{% if user.id == None %} 
+		<meta http-equiv="Refresh" content="0; url='{% url 'stats-demo' %}'"/>
+	{% endif %}
+	{% if user.id != None %} 
+	<title>Courses</title>
+	<h1>Dashboard</h1>
+	<div class="line"></div>
+	{% if courses|length == 0 %}
+		<h3 class="text-muted">No courses found!</h3>
+		<p class="text-muted">Add a course by navigating to <a href="{% url 'account' %}">your account.</a></p>
+	{% endif %}
+	{% for class in courses %}
+		<div class="course" onclick="location.href='{% url 'course-detail' class.id %}'">
+			<h1>{{ class.title }}</h1>
+			<div class="line"></div>
+			<p>{{ class.term }}</p>
+			<p class="text-muted">{{ class.description }}</p>
+		</div>
+	{% endfor %}
+	{% endif %}
+{% endblock content%}

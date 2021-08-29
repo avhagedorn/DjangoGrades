@@ -1,0 +1,25 @@
+{% extends "stats/base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+	<title>Upload</title>
+	<div class="content-section">
+		{% if object.course_weights|length == 0 %}
+		<form method="POST" enctype="multipart/form-data">
+			{% csrf_token %}
+			<fieldset class="form-group">
+				<legend class="border-bottom mb-4">Upload Course Data</legend>
+				<input type="file" name="file" class="form-control-file"></input>
+				<small class="text-muted">File type must be csv.</small>
+			</fieldset>
+			<div class="form-group">
+				<button class="btn btn-outline-info" type="submit">
+					Upload
+				</button>
+			</div>
+		</form>
+		{% else %}
+		<p>You've already uploaded course data!</p>
+		{% endif %}
+	</div>
+{% endblock content%}

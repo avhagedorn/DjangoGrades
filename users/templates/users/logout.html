@@ -1,0 +1,10 @@
+{% extends "stats/base.html" %}
+{% load crispy_forms_tags %}
+
+
+{% block content %}
+	<h2>Successfully logged out!</h2>
+		<small class="text-muted">
+			<a href="{% url 'login' %}">Login</a> or <a href="{% url 'register' %}">Create a New Account</a>
+		</small>
+{% endblock content%}

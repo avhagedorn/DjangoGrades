@@ -1,0 +1,25 @@
+{% extends "stats/base.html" %}
+
+
+
+{% block content %}
+	<title>Delete {{ object.title }}?</title>
+	<div class="content-section">
+		<form method="POST">
+			{% csrf_token %}
+			<fieldset class="form-group">
+				<legend class="border-bottom mb-4">Delete Course</legend>
+				<h2>Delete {{ object.title }}?<h2> 
+			</fieldset>
+			<div class="form-group">
+				<button class="btn btn-outline-danger" type="submit">
+					Delete
+				</button>
+				<a class="btn btn-outline-secondary" type="submit" href="{% url 'course-detail' object.id %}">
+					No thanks!
+				</a>
+			</div>
+			<small class="text-muted">Deleted courses, students and assignments cannot be restored.</small>
+		</form>
+	</div>
+{% endblock content%}

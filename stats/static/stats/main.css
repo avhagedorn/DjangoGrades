@@ -1,0 +1,304 @@
+/* base.html */
+html, body{
+  background-color: #0f0f0f;
+  color: #f2f2f2;
+  padding-bottom: 20px;
+}
+
+/* base.html */
+.alert-message {
+  width: 50%; 
+  left: 25%; 
+  right: 25%;
+}
+
+/* configure_categories_form.html */
+.content-section {
+  margin-left: auto; 
+  margin-right: auto; 
+  max-width: 600px;
+}
+
+/* configure_categories_form.html */
+.float-right {
+  display: inline; 
+  float: right;
+}
+
+/* configure_categories_form.html */
+.textbox-small {
+  margin-top: 10px;
+}
+
+/* course_update.html */
+.settings-links {
+  display: flex;
+  overflow: hidden;
+  justify-content: center;
+}
+
+/* course_update.html */
+.settings-item {
+  margin: 5px;
+}
+
+/* demo.html */
+.demo-chart {
+  display: inline-block; 
+  height: 40%; 
+  width: auto; 
+  min-width: 300px; 
+  position: relative;
+}
+
+/* home.html */
+.course {
+  width: 400px;
+  cursor: pointer;
+  padding: 10px;
+  margin-top: 5px;
+  margin-bottom: 20px;
+  outline: 1px solid #f2f2f2;
+  overflow: hidden;
+}
+
+p {
+  margin-bottom: 5px;
+}
+
+.grade-display {
+  font-size: 1rem; 
+  display: inline;
+}
+
+.text-green {
+  color: rgb(117, 247, 74);
+}
+
+.text-red {
+  color:rgb(245, 13, 13)
+}
+
+.line{
+  width: auto;
+  height: 1px;
+  margin-bottom: 10px;
+  background-color: #f2f2f2;
+  animation: extend ease 0.5s;
+}
+
+@keyframes extend {
+  0%{width: 50%; opacity: 0;}
+  100%{width: 100%; opacity: 1;}
+}
+
+.tableText{
+  color:lightpink;
+}
+
+.charts{
+	display: block;
+	text-align: center;
+}
+
+.textbox{
+	width: 100%;
+}
+
+::-webkit-scrollbar {
+  width: .4rem;
+  height: .3rem;
+}
+::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.4);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-track{
+  background: transparent;
+}
+
+.nav-item {
+  display: inline; 
+  float: right; 
+  margin-right: 5px;
+}
+
+button::-moz-focus-inner {
+  border:0;
+  padding:0;
+}
+
+.flex_item {
+	padding: 5px;
+}
+
+.secondary-container {
+  width: 80%;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.nav-settings {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.button-settings {
+  padding: 5px;
+  margin: 5px;
+}
+
+.chart-group {
+  max-height: 250px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.chart-group-compact {
+  max-height: 150px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.menu-group {
+  height: 315px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.menu-item {
+  display: inline-block;
+  width: 300px;
+  height: 300px;
+  align-content: space-around;
+  margin: auto;
+  margin-top: 10px;
+  outline: 1px solid #f2f2f2;
+}
+
+.inner-content {
+  margin: 15px;
+}
+
+.static-line {
+  height: 1px;
+  background-color: #f2f2f2;
+}
+
+.flex-chart {
+	display: inline-block;
+  padding: 5px;
+}
+
+.large-subchart {
+  width: 800px;
+}
+
+.small-subchart {
+  width: 300px;
+}
+
+.chart-large-item {
+  height: 250px;
+  max-width: 900px;
+  display: inline-block;
+}
+
+.chart-medium-bar {
+  height: 150px;
+  max-width: 650px;
+  display: inline-block;
+}
+
+.chart-small-pie {
+  height: 150px;
+  max-width: 150px;
+  display: inline-block;
+}
+
+.chart-small-item {
+  min-width: 75px;
+  max-width: 200px;
+  display: inline-block;
+}
+
+.modal-dark {
+  color: #f2f2f2;
+  background-color: #0f0f0f;
+}
+
+/* curve_results.html */
+.curve-block {
+  height: auto;
+  margin-top: 10px;
+  outline: 1px solid #f2f2f2;
+}
+
+.curve_inner {
+  padding: 10px;
+}
+
+.curve_text {
+  padding: 1rem;
+  text-overflow: hidden;
+}
+
+.curve-buttons {
+  display: flex;
+  flex-wrap: nowrap;
+  height: 50px;
+}
+
+.textbox {
+  padding: 0.5rem;
+}
+
+/* curves.html */
+.curve-content {
+  width: 40%;
+  height: auto;
+  display:inline-block;
+}
+
+.center {
+  margin-top: 0.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.grade-item {
+  color: #bababa;
+}
+
+/* course_detail.html */
+.modal-inner {
+  padding: 15px;
+}
+
+/* course_detail.html */
+.page-nav {
+  display: block;
+  height: 30px;
+  margin-top: 15px; 
+  margin-bottom: 10px;
+}
+
+/* course_detail.html */
+.table-text {
+  font-size:x-small; 
+  line-height: 1;
+}
+

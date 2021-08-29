@@ -1,0 +1,23 @@
+{% extends "stats/base.html" %}
+{% load crispy_forms_tags %}
+
+
+{% block content %}
+	<title>Course Settings</title>
+	<div class="content-section">
+		<form method="POST">
+			{% csrf_token %}
+			<fieldset>
+				<legend class="border-bottom mb-4">Course Settings</legend>
+				{{ form|crispy }}
+			</fieldset>
+			<div class="settings-links">
+				<a class="btn btn-outline-secondary settings-item" type="submit" href="{% url 'course-gradelines' course.id %}">Gradelines</a>
+				<a class="btn btn-outline-secondary settings-item" type="submit" href="{% url 'course-categories' course.id %}">Categories</a>
+				<a class="btn btn-outline-secondary settings-item" type="submit" href="{% url 'course-config' course.id %}">Weights</a>
+			</div>
+			<button class="btn btn-outline-info" type="submit">Update</button>
+            <a class="btn btn-outline-danger float-right" type="submit" href="{% url 'course-delete' course.id %}">Delete</a>
+		</form>
+	</div>
+{% endblock content%}
