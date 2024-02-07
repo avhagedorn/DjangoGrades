@@ -17,7 +17,7 @@ Python, Django, Chart.js, Bootstrap 4, PostgreSQL
 
 Instructions coming soon, this section is currently under construction. 👷
 
-### Images:
+### Screenshots
 
 ![django_grades_1](https://github.com/avhagedorn/DjangoGrades/assets/66842958/61607d19-8e16-4689-861d-7b314463943c)
 
