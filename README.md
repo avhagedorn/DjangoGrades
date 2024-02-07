@@ -17,6 +17,15 @@ Python, Django, Chart.js, Bootstrap 4, PostgreSQL
 
 Instructions coming soon, this section is currently under construction. 👷
 
+### Images:
+
+![django_grades_1](https://github.com/avhagedorn/DjangoGrades/assets/66842958/61607d19-8e16-4689-861d-7b314463943c)
+
+![django_grades_2](https://github.com/avhagedorn/DjangoGrades/assets/66842958/67ae4f42-3cd3-4640-9b6e-d3ac07797ac7)
+
+![django_grades_3](https://github.com/avhagedorn/DjangoGrades/assets/66842958/bf53099b-023c-4ccc-9205-ad442270c685)
+
+
 ### Issues ###
 
 Due to this being my first medium-sized project, I was not aware of the importance of app architecture.
